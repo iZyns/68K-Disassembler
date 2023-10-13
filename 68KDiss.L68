@@ -1,0 +1,53 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 5/18/2023 12:46:53 PM
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      : 68K Disassembler
+00000000                             3  * Written by : Team BLUE - Aditya Pillai, Vincent Wirawan, Kevin Lee, Nishant Narayana
+00000000                             4  * Date       : 
+00000000                             5  * Description: A program to convert machine-language instructions set in memory within a 68K arch to human-readable assembly code.
+00000000                             6  *-----------------------------------------------------------
+00001000                             7             ORG    $1000
+00001000                             8  START:
+00001000  4E71                       9             NOP                  Although all memory is fair game, we still need memory to store the instructions in.
+00001002  4E71                      10             NOP                  This said, we will fit the instruction size into our program preconditions
+00001004  4E71                      11             NOP                  Everything that we use for processing will need to use ONLY the data and address registers.
+00001006  4E71                      12             NOP                  A0 and D0 off-limits due to 68K needing them for I/O
+00001008  4E71                      13             NOP                  A1 = Address pointer | D6 = Starting range | D7 = Ending range | D1 = Current instruction holding | D2 = Current bit processing
+0000100A                            14             
+0000100A                            15             
+0000100A  43F9 00001034             16             LEA      MSG1, A1    Load message into A1
+00001010  103C 000D                 17             MOVE.B   #13, D0
+00001014  4E4F                      18             TRAP     #15         Display - TRAP task #13
+00001016  2278 0000                 19             MOVE.L   $0000, A1   Clean A1 for input
+0000101A                            20             
+0000101A  103C 0002                 21             MOVE.B   #2, D0      Since user will likely input alphanum hex addr, we'll have to do string conversion
+0000101E  4E4F                      22             TRAP     #15         String input - TRAP task #2
+00001020                            23             
+00001020  4E71                      24             NOP                  NOTE: TRAP 15 task 2 says that input is stored at A1, but A1 will contain FFFFF. This FFFFF is the 
+00001022  4E71                      25             NOP                  location of the inputted starting address. It's stored in ASCII, so will need processing. 
+00001024  4E71                      26             NOP                  The ASCII starts writing out from the LAST USABLE SPACE OF MEMORY, so use the string length held in D1
+00001026  4E71                      27             NOP                  to buffer the address needed to start reading it. vvv-INSERT ASCII PROCESSING BELOW-vvv
+00001028                            28             
+00001028                            29             
+00001028                            30             
+00001028  43F9 00001056             31             LEA      MSG2, A1    Load message into A1
+0000102E  103C 000D                 32             MOVE.B   #13, D0
+00001032  4E4F                      33             TRAP     #15         Display - TRAP task #13
+00001034                            34            
+00001034                            35  
+00001034= 53 74 61 72 74 69 ...     36  MSG1        DC.B        'Starting range for disassembler: ', 0
+00001056= 45 6E 64 69 6E 67 ...     37  MSG2        DC.B        'Ending range for disassembler: ', 0
+00001076                            38              END     START 
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+MSG1                1034
+MSG2                1056
+START               1000
