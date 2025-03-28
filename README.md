@@ -45,11 +45,7 @@ This project enhances understanding and interaction with 68K machine code. The c
 
 ## Getting Started
 
-### Prerequisites
-
-This project requires the following dependencies:
-
-- **Programming Language:** unknown
+- **Programming Language:** Assembly
 
 ### Installation
 
